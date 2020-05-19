@@ -42,8 +42,7 @@ class MLOperator(object):
             sample_sizes = dict([(label, y.value_counts().min()) \
                                  for label in y.unique()])
         elif type(sampling) == str and sampling in list(y.value_counts().index.astype(str)):
-            sample_sizes = dict([(label, \
-                                  y.value_counts()[int(sampling)])
+            sample_sizes = dict([(label,y.value_counts()[int(sampling)])
                                  for label in y.unique()])
         elif type(sampling) == str and 'multi:' in sampling:
             sample_sizes = dict([(label, 
@@ -52,7 +51,7 @@ class MLOperator(object):
         elif type(sampling) == int:
             sample_sizes = dict([(label, sampling) for label in y.unique()])
         else:
-            print 'unknown sampling method or no sampling'
+            print('unknown sampling method or no sampling')
             return y.index
 
         select_index_all = []
@@ -64,8 +63,7 @@ class MLOperator(object):
                 replace = False
             else:
                 replace = True
-            select_index = np.random.choice(label_index, sample_size, \
-                                            replace=replace)
+            select_index = np.random.choice(label_index, sample_size, replace=replace)
             select_index_all = select_index_all + list(select_index)
     
         return select_index_all
@@ -82,15 +80,15 @@ class MLOperator(object):
         X_sampled = x_train
 
         clf = self.get_classifier(classifier=classifier, **kwargs)
-        print clf
-        print 'fitting.....'
+        print(clf)
+        print('fitting.....')
         clf.fit(X_sampled, y_sampled)
 
         return clf
 
     def test(self, clf, x_test, y_test):
         
-        print 'predicting.....'
+        print('predicting.....')
         y_pred = pd.Series(clf.predict(x_test), index=x_test.index)
         y_pred.name = 'predict'
         
@@ -158,7 +156,7 @@ class MLEvaluator(object):
     def plot_confusion_matrix(self, cm, classes,
                               normalize=False,
                               title='Confusion matrix',
-                              cmap=plt.cm.Blues):
+                              cmap=plt.cm):
         """
         This function prints and plots the confusion matrix.
         Normalization can be applied by setting `normalize=True`.
@@ -178,7 +176,7 @@ class MLEvaluator(object):
             cm_text = cm
             print('Confusion matrix, without normalization')
 
-        print cm_text
+        print(cm_text)
 
         thresh = cm.max() / 2.
         for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
@@ -196,7 +194,7 @@ class MLEvaluator(object):
         num_features_imp_plt=50, **kwargs):
         
         date = importances_dict['date']
-        print 'start getting features importance plot for: ', date
+        print('start getting features importance plot for: ', date)
         importances = importances_dict['importances']
         std = importances_dict['std']
         X_labels = importances_dict['X_labels']        
