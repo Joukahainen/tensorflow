@@ -4,7 +4,7 @@ from sklearn import svm
 from sklearn import linear_model
 from sklearn.metrics import confusion_matrix
 import numpy as np
-import xgboost as xgb
+#import xgboost as xgb
 import pandas as pd
 import matplotlib.pyplot as plt
 import itertools
@@ -30,8 +30,8 @@ class MLOperator(object):
             return svm.SVC(**kwargs)
         elif clf_name == 'gaussiannb':
             return naive_bayes.GaussianNB(**kwargs)
-        elif clf_name == 'xgb':
-            return xgb.XGBClassifier(**kwargs)
+        #elif clf_name == 'xgb':
+        #    return xgb.XGBClassifier(**kwargs)
         elif clf_name == 'logit':
             return linear_model.LogisticRegression(**kwargs)
         
@@ -152,7 +152,7 @@ class MLEvaluator(object):
             self.pred_df.predict), index=idx, columns=cols)
         
         return conf_mx
-
+    '''
     def plot_confusion_matrix(self, cm, classes,
                               normalize=False,
                               title='Confusion matrix',
@@ -189,7 +189,7 @@ class MLEvaluator(object):
         plt.xlabel('Predicted label')
         
         return fig
-
+    '''
     def plot_feature_importance(self, importances_dict, 
         num_features_imp_plt=50, **kwargs):
         
@@ -217,14 +217,14 @@ class MLEvaluator(object):
 
         return fig
 
-    def plot_feature_importance_xgb(self, clf):
+    '''def plot_feature_importance_xgb(self, clf):
         fig,ax = plt.subplots(figsize = (25, 14))
         
         ax = xgb.plot_importance(clf, ax = ax,
                                  title='Feature importance',
                                  xlabel='Importance', ylabel='Features',
                                  importance_type='gain')
-        return fig
+        return fig'''
 
     def plot_roc(self):
         fig = plt.figure(figsize=(12,9))
